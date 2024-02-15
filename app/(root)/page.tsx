@@ -2,7 +2,6 @@ import LoadMore from "@/components/shared/LoadMore";
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchThreads } from "@/lib/actions/thread.actions";
 import { currentUser } from "@clerk/nextjs";
-import { addLikes } from "@/lib/actions/user.actions";
 
 
 type ThreadProps = {
@@ -27,7 +26,6 @@ export default async function page() {
 
    const result = await fetchThreads(1,2)
    const user = await currentUser()
-
 
   return (
     <>

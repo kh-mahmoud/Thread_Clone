@@ -1,62 +1,45 @@
-import { Webhook } from 'svix'
-import { headers } from 'next/headers'
-import { WebhookEvent } from '@clerk/nextjs/server'
-import { deleteThread } from '@/lib/actions/thread.actions'
- 
-export async function POST(req: Request) {
-  // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
-  const WEBHOOK_SECRET = process.env.NEXT_CLERK_WEBHOOK_SECRET!;
+import { deleteThread } from "@/lib/actions/thread.actions";
+import { clerkClient } from "@clerk/nextjs/server";
+import { IncomingHttpHeaders } from "http";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
+import { Webhook, WebhookRequiredHeaders } from "svix";
 
-  if (!WEBHOOK_SECRET) {
-    throw new Error(
-      "Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local",
-    );
-  }
+const webhookSecret = process.env.WEBHOOK_SECRET || "";
 
-  // Get the headers
-  const headerPayload = headers();
-  const svix_id = headerPayload.get("svix-id");
-  const svix_timestamp = headerPayload.get("svix-timestamp");
-  const svix_signature = headerPayload.get("svix-signature");
+async function handler(request: Request) {
+  const payload = await request.json();
+  const headersList = headers();
+  const heads = {
+    "svix-id": headersList.get("svix-id"),
+    "svix-timestamp": headersList.get("svix-timestamp"),
+    "svix-signature": headersList.get("svix-signature"),
+  };
+  const wh = new Webhook(webhookSecret);
+  let evt: Event | null = null;
 
-  // If there are no headers, error out
-  if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response("Error occured -- no svix headers", {
-      status: 400,
-    });
-  }
-
-  // Get the body
-  const payload = (await req.json()) as Request;
-  const body = JSON.stringify(payload);
-
-  // Create a new SVIX instance with your secret.
-  const wh = new Webhook(WEBHOOK_SECRET);
-
-  let evt: WebhookEvent;
-
-  // Verify the payload with the headers
   try {
-    evt = wh.verify(body, {
-      "svix-id": svix_id,
-      "svix-timestamp": svix_timestamp,
-      "svix-signature": svix_signature,
-    }) as WebhookEvent;
+    evt = wh.verify(
+      JSON.stringify(payload),
+      heads as IncomingHttpHeaders & WebhookRequiredHeaders
+    ) as Event;
   } catch (err) {
-    console.error("Error verifying webhook:", err);
-    return new Response("Error occured", {
-      status: 400,
-    });
+    console.error((err as Error).message);
+    return NextResponse.json({}, { status: 400 });
   }
 
+  type EventType = "user.created" | "user.updated" | "organization.created" ;
 
+  type Event = {
+  data: Record<string, string | number>;
+  object: "event";
+  type: EventType;
+};
+
+  const eventType: EventType = evt.type;
   if (evt.data) {
-        
-      // Delete thread
-      await deleteThread("65ccff2c201a247f3cef5007")
 
-      
+    await deleteThread("65ce7aee9a26db7c115cf74a")
   }
-
-  return new Response("boop", { status: 201 });
 }
+

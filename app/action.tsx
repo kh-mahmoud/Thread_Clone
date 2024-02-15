@@ -1,7 +1,7 @@
 'use server'
 import ThreadCard from "@/components/cards/ThreadCard"
-import { fetchThreads } from "@/lib/actions/thread.actions"
-import { addLikes, fetchUsers } from "@/lib/actions/user.actions";
+import { deleteThread, fetchThreads } from "@/lib/actions/thread.actions"
+import { addLikes} from "@/lib/actions/user.actions";
 
 
 
@@ -29,6 +29,13 @@ export const FetchAction=async (page:number,userId:string | undefined)=>
   {
      const like = await addLikes(currentUserId,id)
   }
+
+  export const DeleteThread = async(id:string)=>
+  {
+     const like = await deleteThread(id)
+  }
+
+
 
 
 

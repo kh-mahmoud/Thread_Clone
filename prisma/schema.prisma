@@ -42,7 +42,7 @@ model Thread {
   updatedAt   DateTime   @updatedAt
   parent      Thread?    @relation("ChildToParent", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   parentId    String?    @db.ObjectId
-  children    Thread[]   @relation("ChildToParent")
+  children    Thread[]   @relation("ChildToParent") 
   Community   Community? @relation(fields: [communityId], references: [id])
   communityId String?    @db.ObjectId
   likes       User[]     @relation("likedBy", fields: [userlike], references: [id])

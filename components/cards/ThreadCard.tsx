@@ -9,6 +9,7 @@ import {
 } from 'next-share'
 import { Like } from '@/app/action';
 import Alert from '../shared/Alert';
+import DropDown from '../shared/DropDown';
 
 
 type Props = {
@@ -44,11 +45,15 @@ type Props = {
 
 const ThreadCard = ({ id, currentUserId, parentId, content, author, createdAt, comments, isComment, likes }: Props) => {
     const formatDate = moment(createdAt).format('h:mma - MMM D, YYYY');
-    let displayedUserIds: string[] = [];
     const checklike = likes?.filter((like) => (like.userId === currentUserId))
+    let displayedUserIds: string[] = [];
+
+
     const [likes_count, setLikes_count] = useState<number>(likes?.length)
     const [isLiked,setIsLiked] = useState<boolean>(checklike?.length>0?true:false)
     const [isOpen, setIsOpen] = useState<boolean>(false);
+
+
 
     const handleClick = async () => {
          if(!currentUserId){
@@ -69,7 +74,7 @@ const ThreadCard = ({ id, currentUserId, parentId, content, author, createdAt, c
 
 
     return (
-        <article className={`flex w-full flex-col rounded-xl  ${isComment ? 'px-0 xs:px-7' : 'bg-dark-2 p-7'}`}>
+        <article className={`flex w-full flex-col rounded-xl relative  ${isComment ? 'px-0 xs:px-7' : 'bg-dark-2 p-7'}`}>
             <div className='flex items-start justify-between'>
                 <div className='flex w-full flex-1 flex-row gap-4'>
                     <div className='flex flex-col items-center'>
@@ -150,10 +155,13 @@ const ThreadCard = ({ id, currentUserId, parentId, content, author, createdAt, c
                 <div className='text-small-regular  text-gray-1 mt-2 flex items-end'>
                     {formatDate}
                 </div>
+                 
+                <div className={`absolute top-3 right-3 ${currentUserId === author?.userId ? 'block' : 'hidden'}`}>
+                   <DropDown id={id}/>   
+                </div>
+
             </div>
             {isOpen && <Alert isOpen={isOpen} setIsOpen={setIsOpen}/>}
-
-
         </article>
     );
 }

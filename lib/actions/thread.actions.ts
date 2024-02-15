@@ -1,4 +1,5 @@
 "use server"
+import { Chicle } from 'next/font/google';
 import { prisma } from '../prismaClient';
 import { revalidatePath } from 'next/cache';
 
@@ -172,12 +173,53 @@ const {userId,content,threadId,path}= props
 export const deleteThread = async (id:string) =>
 {
    try {
-      
-      const thread= await prisma.thread.delete({
-        where: {
-          id,
-        },
-      })
+      // Find the parent thread by ID and include its children
+    const threads = await prisma.thread.findUnique({
+      where: { id: id },
+      include: { children: true },
+    });
+
+    // Check if the parent thread exists
+    if (!threads) {
+      console.error('Parent thread not found');
+      return;
+    }
+
+    // Disconnect all children threads from the parent thread
+      await prisma.thread.update({
+        where: { id: id },
+            data: {
+              children: {
+                disconnect: threads.children.map((child) => ({ id: child.id })),
+              },
+            },
+          });
+          
+          // Delete the the thred like from user
+          await prisma.user.deleteMany({
+            where: {
+              liked: {
+                some: {
+                  id: { in: threads.children.map((child) => child.id) },
+                },
+              },
+            },
+          });
+
+          // Delete the parent thread and its children threads
+          const thread = await prisma.thread.deleteMany({
+            where: {
+              OR: [
+                { id: id }, // Delete the parent thread
+                { id: { in: threads.children.map((child) => child.id) } }, // Delete children threads
+              ],
+            },
+          });
+          revalidatePath("/")
+          revalidatePath("/profile")
+          revalidatePath(`/thread/${id}`)
+
+
       if(thread)
       {
         return {status:200,message:"Thread deleted successfully"}

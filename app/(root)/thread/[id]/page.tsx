@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 async function page({ params }: { params: { id: string } }) {
     
     const thread = await fetchThreadbyId(params.id)
+     if(!thread) return redirect('/') 
 
     const user:any = await currentUser()
     
@@ -18,7 +19,7 @@ async function page({ params }: { params: { id: string } }) {
     return (
         <section className='relative'>
          <div>
-            <ThreadCard key={thread.id}
+            <ThreadCard key={thread?.id}
                 id={thread?.id}
                 currentUserId={user?.id}
                 parentId={thread?.parentId}
@@ -26,7 +27,7 @@ async function page({ params }: { params: { id: string } }) {
                 author={thread?.author}
                 createdAt={thread?.createdAt}
                 // comments={thread?.children}
-                likes={thread.likes}
+                likes={thread?.likes}
                 isComment={false}
             />
         </div>
@@ -42,7 +43,7 @@ async function page({ params }: { params: { id: string } }) {
         </SignedIn>
 
         <div className="mt-9 flex flex-col gap-8">
-           {thread.children.map((comment:any)=>
+           {thread?.children.map((comment:any)=>
                <ThreadCard key={comment.id}
                 id={comment.id}
                 currentUserId={user?.id}
