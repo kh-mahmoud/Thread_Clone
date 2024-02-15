@@ -8,7 +8,7 @@ import { addLikes} from "@/lib/actions/user.actions";
 
 export const FetchAction=async (page:number,userId:string | undefined)=>
 {
-    const data =await fetchThreads(page,2)
+    const data =await fetchThreads(page,3)
 
  return {data:data?.threads.map((thread:any) => (
       <ThreadCard key={thread.id}
