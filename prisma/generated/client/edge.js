@@ -144,7 +144,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\NexTech\\Desktop\\threads\\prisma\\generated\\client",
+      "value": "C:\\Users\\NexTech\\Desktop\\Thread_Clone\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
