@@ -74,7 +74,6 @@ export const POST = async (request: Request) => {
 
     try {
       // @ts-ignore
-       await deleteThread("65ce7aee9a26db7c115cf74a")
 
       return NextResponse.json({ message: "User created" }, { status: 201 });
     } catch (err) {
