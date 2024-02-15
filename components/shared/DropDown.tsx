@@ -23,7 +23,7 @@ import Image from "next/image";
                     />
                </div>
            </DropdownMenuTrigger>
-            <DropdownMenuContent >
+            <DropdownMenuContent className="bg-dark-2 text-white hover:text-black" >
                 <DropdownMenuItem onClick={()=>DeleteThread(id)} className="cursor-pointer">Delete</DropdownMenuItem>
 
             </DropdownMenuContent>
