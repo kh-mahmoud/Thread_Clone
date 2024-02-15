@@ -110,8 +110,7 @@ const ThreadCard = ({ id, currentUserId, parentId, content, author, createdAt, c
                                 <Link href={`/thread/${id}`}  ><Image src='/reply.svg' className='cursor-pointer object-contain hover:invert' alt='heart' width={24} height={24} /></Link>
                                 {/* <Image src='/share.svg' className='cursor-pointer object-contain hover:invert' alt='heart' width={24} height={24} /> */}
                                 <FacebookShareButton
-                                    url={'https://github.com/next-share'}
-                                    quote={'next-share is a social share buttons for your next React apps.'}
+                                    url={`https://thread-view.vercel.app/thread/${id}`}
                                     className='flex justify-end'
                                 >
                                 <Image src='/repost.svg' className='cursor-pointer object-contain hover:invert' alt='heart' width={24} height={24}/>
