@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma db push && npx prisma generate && next build",
-    "postinstall": "npx prisma generate ",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "deploy": "prisma generate  deploy"
   },
   "dependencies": {
     "@clerk/localizations": "^1.26.13",
