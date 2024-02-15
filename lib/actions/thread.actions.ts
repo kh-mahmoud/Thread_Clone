@@ -169,3 +169,28 @@ const {userId,content,threadId,path}= props
 }
 
 
+export const deleteThread = async (id:string) =>
+{
+   try {
+      
+      const thread= await prisma.thread.delete({
+        where: {
+          id,
+        },
+      })
+      if(thread)
+      {
+        return {status:200,message:"Thread deleted successfully"}
+      }
+      else
+      {
+        return {status:400,message:"Thread deletion failed"}
+      }
+
+   } catch (error:any) {
+       console.log(error.message)
+   }
+   finally {
+    await prisma.$disconnect();
+  }
+}
