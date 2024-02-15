@@ -24,7 +24,7 @@ type ThreadProps = {
 
 export default async function page() {
 
-   const result = await fetchThreads(1,2)
+   const result = await fetchThreads(1,3)
    const user = await currentUser()
 
   return (
