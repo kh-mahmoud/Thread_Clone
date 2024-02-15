@@ -27,7 +27,7 @@ type Props={
     btnTitle:string
 }
 
-const AccountProfile = ({user,btnTitle}:Props) => {
+const AccountProfile = ({user,btnTitle}:any) => {
 
     const [files,setFiles] = useState<File[]>([])
     const [hasImagechanged,sethasImagechanged] = useState(false)
