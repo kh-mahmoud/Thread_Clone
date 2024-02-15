@@ -22,7 +22,7 @@ const Alert = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: React.Dispat
                             You need to sign in to like this thread.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
+                     <AlertDialogFooter className="flex gap-4">
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         {/* Instead of direct text, use a Link component for sign-in */}
                         <AlertDialogAction>
