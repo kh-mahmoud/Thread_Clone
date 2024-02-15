@@ -4,12 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "prebuild":"npx prisma generate",
-    "start": "npx prisma db push && npx prisma generate && next start",
-    "lint": "next lint",
+    "build": "npx prisma generate && next build",
     "postinstall": "prisma generate",
-    "deploy": "prisma generate  deploy"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@clerk/localizations": "^1.26.13",
@@ -17,7 +15,7 @@
     "@clerk/themes": "^1.7.9",
     "@hookform/resolvers": "^3.3.4",
     "@plaiceholder/next": "^3.0.0",
-    "@prisma/client": "^4.16.2",
+    "@prisma/client": "^5.9.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
@@ -51,7 +49,7 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^8.56.0",
     "postcss": "^8",
-    "prisma": "^4.15.0",
+    "prisma": "^5.9.1",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
