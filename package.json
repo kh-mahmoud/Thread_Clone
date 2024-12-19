@@ -29,7 +29,7 @@
     "graphql-request": "^6.1.0",
     "lucide-react": "^0.320.0",
     "moment": "^2.30.1",
-    "next": "14.1.0",
+    "next": "14.2.20",
     "next-share": "^0.27.0",
     "plaiceholder": "^3.0.0",
     "react": "^18",
